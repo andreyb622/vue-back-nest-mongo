@@ -59,7 +59,7 @@
 		"indent": [
 			true,
 			"tabs",
-			4
+			2
 		],
 		"linterOptions": {
 			"exclude": [
