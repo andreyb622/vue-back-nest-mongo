@@ -1,11 +1,39 @@
-import { Controller, Get, UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
+import {
+	Body,
+	Controller,
+	Delete,
+	Get,
+	NotFoundException,
+	Param,
+	Patch,
+} from '@nestjs/common';
+import { USER_NOT_FOUND_ERROR } from 'src/auth/auth.constants';
+import { UserModel } from './user.model';
+import { UserService } from './user.service';
 
 @Controller('user')
 export class UserController {
-  @UseGuards(JwtAuthGuard)
-  @Get('/')
-  async getUsers() {
-    return { user: 'qqwewqeqwe' };
-  }
+	constructor(private readonly userService: UserService) {}
+
+	// @UseGuards(JwtAuthGuard)
+	@Get('/')
+	async getUsers() {
+		return this.userService.findAllUsers();
+	}
+
+	@Patch(':id')
+	async patch(@Param('id') id: string, @Body() dto: UserModel) {
+		const updatedUser = await this.userService.updateUserById(id, dto);
+		if (!updatedUser) {
+			throw new NotFoundException(USER_NOT_FOUND_ERROR);
+		}
+		return updatedUser;
+	}
+	@Delete(':id')
+	async delete(@Param('id') id: string) {
+		const deletedUser = await this.userService.deleteUserById(id);
+		if (!deletedUser) {
+			throw new NotFoundException(USER_NOT_FOUND_ERROR);
+		}
+	}
 }
