@@ -56,11 +56,6 @@
 			"always"
 		],
 		"trailing-comma": false,
-		"indent": [
-			true,
-			"tabs",
-			2
-		],
 		"linterOptions": {
 			"exclude": [
 				"./src/**/*.d.ts"
