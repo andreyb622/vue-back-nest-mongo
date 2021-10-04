@@ -2,18 +2,12 @@ import { prop } from '@typegoose/typegoose';
 import { Base, TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
 import { Types } from 'mongoose';
 
-export interface UserModel extends Base {}
+export interface BoardModel extends Base {}
 
-export class UserModel extends TimeStamps {
+export class BoardModel extends TimeStamps {
   @prop({ unique: true })
-  email: string;
-
-  @prop()
-  passwordHash: string;
-
-  @prop({ default: 'user' })
-  role: string;
+  name: string;
 
   @prop({ type: () => [Types.ObjectId] })
-  boards?: Types.ObjectId[];
+  users: Types.ObjectId[];
 }

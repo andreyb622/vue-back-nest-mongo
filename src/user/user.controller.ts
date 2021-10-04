@@ -8,9 +8,10 @@ import {
   Patch,
   UseGuards,
 } from '@nestjs/common';
+import { Types } from 'mongoose';
 import { USER_NOT_FOUND_ERROR } from 'src/auth/auth.constants';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
-import { UserModel } from './user.model';
+import { UserDto } from './dto/user.dto';
 import { UserService } from './user.service';
 
 @Controller('user')
@@ -25,7 +26,7 @@ export class UserController {
 
   @UseGuards(JwtAuthGuard)
   @Patch(':id')
-  async patch(@Param('id') id: string, @Body() dto: UserModel) {
+  async patch(@Param('id') id: Types.ObjectId, @Body() dto: UserDto) {
     const updatedUser = await this.userService.updateUserById(id, dto);
     if (!updatedUser) {
       throw new NotFoundException(USER_NOT_FOUND_ERROR);

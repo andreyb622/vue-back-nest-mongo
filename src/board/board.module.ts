@@ -3,28 +3,29 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { TypegooseModule } from 'nestjs-typegoose';
 import { getJWTConfig } from 'src/configs/jwt.config';
-import { UserController } from './user.controller';
-import { UserModel } from './user.model';
-import { UserService } from './user.service';
+import { UserModule } from 'src/user/user.module';
+import { BoardController } from './board.controller';
+import { BoardModel } from './board.model';
+import { BoardService } from './board.service';
 
 @Module({
-  controllers: [UserController],
-  providers: [UserService],
+  controllers: [BoardController],
+  providers: [BoardService],
   imports: [
     TypegooseModule.forFeature([
       {
-        typegooseClass: UserModel,
+        typegooseClass: BoardModel,
         schemaOptions: {
-          collection: 'User',
+          collection: 'Board',
         },
       },
     ]),
+    UserModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: getJWTConfig,
     }),
   ],
-  exports: [UserService],
 })
-export class UserModule {}
+export class BoardModule {}
