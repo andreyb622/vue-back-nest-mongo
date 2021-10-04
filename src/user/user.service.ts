@@ -21,7 +21,8 @@ export class UserService {
   }
 
   async findUserByToken(auth: string) {
-    const { email } = await this.jwtService.verifyAsync(auth.split(' ')[1]);
+    const token: string = auth.split(' ')[1];
+    const { email } = await this.jwtService.verifyAsync(token);
     return this.findUserByEmail(email);
   }
 
