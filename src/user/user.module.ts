@@ -4,12 +4,13 @@ import { JwtModule } from '@nestjs/jwt';
 import { TypegooseModule } from 'nestjs-typegoose';
 import { getJWTConfig } from 'src/configs/jwt.config';
 import { UserController } from './user.controller';
-import { UserModel } from './user.model';
-import { UserService } from './user.service';
+import { UserModel } from './models/user.model';
+import { UserService } from './servicies/user.service';
+import { UserDao } from './DAO/user.dao';
 
 @Module({
   controllers: [UserController],
-  providers: [UserService],
+  providers: [UserService, UserDao],
   imports: [
     TypegooseModule.forFeature([
       {

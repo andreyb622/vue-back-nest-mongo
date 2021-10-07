@@ -5,12 +5,13 @@ import { TypegooseModule } from 'nestjs-typegoose';
 import { getJWTConfig } from 'src/configs/jwt.config';
 import { UserModule } from 'src/user/user.module';
 import { BoardController } from './board.controller';
-import { BoardModel } from './board.model';
-import { BoardService } from './board.service';
+import { BoardDao } from './DAO/board.dao';
+import { BoardModel } from './models/board.model';
+import { BoardService } from './servicies/board.service';
 
 @Module({
   controllers: [BoardController],
-  providers: [BoardService],
+  providers: [BoardService, BoardDao],
   imports: [
     TypegooseModule.forFeature([
       {
