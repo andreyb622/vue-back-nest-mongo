@@ -1,9 +1,12 @@
+import { Type } from 'class-transformer';
 import { IsArray, IsString } from 'class-validator';
+import { Types } from 'mongoose';
 
 export class UpdateBoardDto {
   @IsString()
   name: string;
 
   @IsArray()
-  users: string[];
+  @Type(() => Types.ObjectId)
+  users: Types.ObjectId[];
 }

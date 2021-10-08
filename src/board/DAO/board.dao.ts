@@ -1,4 +1,5 @@
 import { ModelType } from '@typegoose/typegoose/lib/types';
+import { Types } from 'mongoose';
 import { InjectModel } from 'nestjs-typegoose';
 import { CreateBoardDto } from '../dto/create-board.dto';
 import { UpdateBoardDto } from '../dto/update-board.dto';
@@ -9,12 +10,16 @@ export class BoardDao {
     @InjectModel(BoardModel) private readonly boardModel: ModelType<BoardModel>,
   ) {}
 
+  toHexObjectId(id: string) {
+    return new Types.ObjectId(id);
+  }
+
   async getById(id: string) {
     return this.boardModel.findById(id).exec();
   }
 
   async getAllUsersBoard(userId: string) {
-    return this.boardModel.find({ users: userId }).exec();
+    return this.boardModel.find({ users: this.toHexObjectId(userId) }).exec();
   }
 
   async createBoard(dto: CreateBoardDto) {
