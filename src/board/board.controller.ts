@@ -8,44 +8,40 @@ import {
   Patch,
   Post,
   UseGuards,
-  UsePipes,
-  ValidationPipe,
 } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
-import { BoardService } from './board.service';
-import { BoardDto } from './dto/board.dto';
+import { BoardService } from './servicies/board.service';
+import { UpdateBoardDto } from './dto/update-board.dto';
+import { CreateBoardDto } from './dto/create-board.dto';
 
+@UseGuards(JwtAuthGuard)
 @Controller('board')
 export class BoardController {
   constructor(private readonly boardService: BoardService) {}
 
-  @UsePipes(new ValidationPipe())
   @Get(':id')
   async get(@Param('id') id: string) {
-    return this.boardService.findBoard(id);
+    return this.boardService.findBoardById(id);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get('/')
-  async getAll() {
-    return this.boardService.findAllBoards();
+  async getAll(@Headers('Authorization') auth: string) {
+    return this.boardService.findAllBoards(auth);
   }
 
-  @UseGuards(JwtAuthGuard)
-  @UsePipes(new ValidationPipe())
   @Post('/')
-  async create(@Body() dto: BoardDto, @Headers('Authorization') auth: string) {
+  async create(
+    @Body() dto: CreateBoardDto,
+    @Headers('Authorization') auth: string,
+  ) {
     return this.boardService.createBoard(auth, dto);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Patch(':id')
-  async patch(@Param('id') id: string, @Body() dto: BoardDto) {
-    const updateBoard = await this.boardService.updateBoardById(id, dto);
-    return updateBoard;
+  async patch(@Param('id') id: string, @Body() dto: UpdateBoardDto) {
+    return this.boardService.updateBoardById(id, dto);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   async delete(
     @Param('id') id: string,

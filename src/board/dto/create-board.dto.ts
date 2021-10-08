@@ -1,12 +1,13 @@
 import { Type } from 'class-transformer';
-import { IsArray, IsString } from 'class-validator';
+import { IsArray, IsOptional, IsString } from 'class-validator';
 import { Types } from 'mongoose';
 
-export class BoardDto {
+export class CreateBoardDto {
   @IsString()
   name: string;
 
   @IsArray()
+  @IsOptional()
   @Type(() => Types.ObjectId)
-  users: Types.ObjectId[];
+  users?: Types.ObjectId[];
 }
