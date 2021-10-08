@@ -16,8 +16,8 @@ export class BoardDao extends DAOBaseClass {
     return this.boardModel.findById(id).exec();
   }
 
-  async getAllUsersBoard(userId: string) {
-    return this.boardModel.find({ users: this.toHexObjectId(userId) }).exec();
+  async getAllUsersBoards(userId) {
+    return this.boardModel.find({ users: userId }).exec();
   }
 
   async createBoard(dto: CreateBoardDto) {

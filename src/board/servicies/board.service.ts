@@ -17,7 +17,7 @@ export class BoardService {
 
   async findAllBoards(auth: string) {
     const user = await this.userService.findUserByToken(auth);
-    return this.boardDao.getAllUsersBoard(user._id.toHexString());
+    return this.boardDao.getAllUsersBoards(user._id);
   }
 
   async createBoard(auth: string, dto: CreateBoardDto) {
