@@ -1,17 +1,15 @@
 import { ModelType } from '@typegoose/typegoose/lib/types';
-import { Types } from 'mongoose';
 import { InjectModel } from 'nestjs-typegoose';
+import { DAOBaseClass } from 'src/utils/entities/DAOBaseClass';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
 import { UserModel } from '../models/user.model';
 
-export class UserDao {
+export class UserDao extends DAOBaseClass {
   constructor(
     @InjectModel(UserModel) private readonly userModel: ModelType<UserModel>,
-  ) {}
-
-  toHexObjectId(id: string) {
-    return new Types.ObjectId(id);
+  ) {
+    super();
   }
 
   async getById(id: string) {

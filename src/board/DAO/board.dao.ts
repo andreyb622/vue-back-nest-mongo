@@ -1,17 +1,15 @@
 import { ModelType } from '@typegoose/typegoose/lib/types';
-import { Types } from 'mongoose';
 import { InjectModel } from 'nestjs-typegoose';
+import { DAOBaseClass } from 'src/utils/entities/DAOBaseClass';
 import { CreateBoardDto } from '../dto/create-board.dto';
 import { UpdateBoardDto } from '../dto/update-board.dto';
 import { BoardModel } from '../models/board.model';
 
-export class BoardDao {
+export class BoardDao extends DAOBaseClass {
   constructor(
     @InjectModel(BoardModel) private readonly boardModel: ModelType<BoardModel>,
-  ) {}
-
-  toHexObjectId(id: string) {
-    return new Types.ObjectId(id);
+  ) {
+    super();
   }
 
   async getById(id: string) {
