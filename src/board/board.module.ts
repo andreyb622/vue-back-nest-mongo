@@ -4,10 +4,11 @@ import { JwtModule } from '@nestjs/jwt';
 import { TypegooseModule } from 'nestjs-typegoose';
 import { getJWTConfig } from 'src/configs/jwt.config';
 import { UserModule } from 'src/user/user.module';
-import { BoardController } from './board.controller';
+import { BoardController } from './controllers/board.controller';
 import { BoardDao } from './DAO/board.dao';
 import { BoardModel } from './models/board.model';
 import { BoardService } from './servicies/board.service';
+// import { ColumnService } from './servicies/column.service';
 
 @Module({
   controllers: [BoardController],
