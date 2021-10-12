@@ -10,9 +10,9 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
-import { BoardService } from './servicies/board.service';
-import { UpdateBoardDto } from './dto/update-board.dto';
-import { CreateBoardDto } from './dto/create-board.dto';
+import { BoardService } from '../servicies/board.service';
+import { ColumnDto, UpdateBoardDto } from '../dto/update-board.dto';
+import { CreateBoardDto } from '../dto/create-board.dto';
 
 @UseGuards(JwtAuthGuard)
 @Controller('board')
@@ -48,5 +48,27 @@ export class BoardController {
     @Headers('Authorization') auth: string,
   ) {
     return this.boardService.deleteBoardById(id, auth);
+  }
+
+  @Post(':id/column')
+  async createColumn(@Param('id') id: string, @Body() dto: ColumnDto) {
+    return this.boardService.createColumn(id, dto);
+  }
+
+  @Patch(':id/column/:columnId')
+  async updateColumn(
+    @Param('id') id: string,
+    @Param('columnId') columnId: string,
+    @Body() dto: ColumnDto,
+  ) {
+    return this.boardService.updateColumnById(id, columnId, dto);
+  }
+
+  @Delete(':id/column/:columnId')
+  async deleteColumn(
+    @Param('id') id: string,
+    @Param('columnId') columnId: string,
+  ) {
+    return this.boardService.deleteColumnById(id, columnId);
   }
 }
