@@ -2,7 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { UserService } from 'src/user/servicies/user.service';
 import { BoardDao } from '../DAO/board.dao';
 import { CreateBoardDto } from '../dto/create-board.dto';
-import { ColumnDto, UpdateBoardDto } from '../dto/update-board.dto';
+import { UpdateBoardDto } from '../dto/update-board.dto';
 
 @Injectable()
 export class BoardService {
@@ -43,44 +43,5 @@ export class BoardService {
     }
     await this.userService.updateUserById(user._id.toHexString(), user);
     return this.boardDao.deleteBoardById(id);
-  }
-
-  async createColumn(boardId: string, dto: ColumnDto) {
-    const board: UpdateBoardDto = await this.findBoardById(boardId);
-    const createdColumn = { ...dto, _id: this.boardDao.createNewId() };
-    board.columns.push(createdColumn);
-    return this.updateBoardById(boardId, board);
-  }
-
-  async updateColumnById(boardId: string, columnId: string, dto: ColumnDto) {
-    const board = await this.findBoardById(boardId);
-    const columnIndex = board.columns.findIndex(
-      (item) => item._id.toHexString() === columnId,
-    );
-
-    dto.cards.forEach((i) => {
-      if (!this.boardDao.isValid(i)) {
-        throw new BadRequestException();
-      }
-    });
-
-    board.columns[columnIndex] = {
-      name: dto.name,
-      _id: board.columns[columnIndex]._id,
-      cards: [...board.columns[columnIndex].cards, ...dto.cards],
-    };
-
-    return this.updateBoardById(boardId, board);
-  }
-
-  async deleteColumnById(boardId: string, columnId: string) {
-    const board: UpdateBoardDto = await this.findBoardById(boardId);
-    const columnIndex = board.columns.findIndex((column) => {
-      return column._id.toHexString() === columnId;
-    });
-    if (columnIndex > -1) {
-      board.columns.splice(columnIndex, 1);
-    }
-    return this.updateBoardById(boardId, board);
   }
 }

@@ -2,16 +2,12 @@ import { Type } from 'class-transformer';
 import { IsArray, IsMongoId, IsOptional, IsString } from 'class-validator';
 import { Types } from 'mongoose';
 
-export class UpdateBoardDto {
+export class UpdateColumnDto {
   @IsString()
   name: string;
 
   @IsArray()
-  @Type(() => Types.ObjectId)
-  users: Types.ObjectId[];
-
-  @IsArray()
   @IsOptional()
   @Type(() => Types.ObjectId)
-  columns?: Types.ObjectId[];
+  cards?: Types.ObjectId[];
 }
