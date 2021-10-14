@@ -1,5 +1,5 @@
 import { Type } from 'class-transformer';
-import { IsArray, IsMongoId, IsOptional, IsString } from 'class-validator';
+import { IsArray, IsString } from 'class-validator';
 import { Types } from 'mongoose';
 
 export class UpdateBoardDto {
@@ -9,9 +9,4 @@ export class UpdateBoardDto {
   @IsArray()
   @Type(() => Types.ObjectId)
   users: Types.ObjectId[];
-
-  @IsArray()
-  @IsOptional()
-  @Type(() => Types.ObjectId)
-  columns?: Types.ObjectId[];
 }

@@ -8,6 +8,6 @@ export class ColumnModel extends TimeStamps {
   @prop({ unique: true })
   name: string;
 
-  @prop({ type: () => [Types.ObjectId], default: [] })
-  cards?: Types.ObjectId[];
+  @prop()
+  boardId: Types.ObjectId;
 }

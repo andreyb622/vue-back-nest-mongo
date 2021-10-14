@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { UserService } from 'src/user/servicies/user.service';
 import { BoardDao } from '../DAO/board.dao';
 import { CreateBoardDto } from '../dto/create-board.dto';

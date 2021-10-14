@@ -1,8 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { JwtModule } from '@nestjs/jwt';
 import { TypegooseModule } from 'nestjs-typegoose';
-import { getJWTConfig } from 'src/configs/jwt.config';
 import { UserModule } from 'src/user/user.module';
 import { BoardController } from './controllers/board.controller';
 import { BoardDao } from './DAO/board.dao';
@@ -22,11 +19,6 @@ import { BoardService } from './servicies/board.service';
       },
     ]),
     UserModule,
-    JwtModule.registerAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: getJWTConfig,
-    }),
   ],
   exports: [BoardService],
 })

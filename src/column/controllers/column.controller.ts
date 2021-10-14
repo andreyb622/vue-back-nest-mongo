@@ -3,7 +3,6 @@ import {
   Controller,
   Delete,
   Get,
-  Headers,
   Param,
   Patch,
   Post,
@@ -41,7 +40,7 @@ export class ColumnController {
   }
 
   @Delete(':id')
-  async delete(@Param('id') id: string, @Body() { boardId }) {
-    return this.columnService.deleteColumnById(id, boardId);
+  async delete(@Param('id') id: string) {
+    return this.columnService.deleteColumnById(id);
   }
 }

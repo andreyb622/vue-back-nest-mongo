@@ -18,7 +18,7 @@ export class ColumnDao extends DAOBaseClass {
   }
 
   async getAllColumns(boardId) {
-    return this.columnModel.find({ _id: boardId }).exec();
+    return this.columnModel.find({ boardId: boardId }).exec();
   }
 
   async createColumn(dto: CreateColumnDto) {

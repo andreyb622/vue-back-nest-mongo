@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { BoardService } from 'src/board/servicies/board.service';
 import { ColumnDao } from '../DAO/column.dao';
 import { CreateColumnDto } from '../dto/create-column.dto';
@@ -21,12 +21,10 @@ export class ColumnService {
   }
 
   async createColumn({ boardId, name }: CreateColumnDto) {
-    const board = await this.boardService.findBoardById(boardId);
     const newColumn = await this.columnDao.createColumn({
-      name: name,
+      name,
+      boardId,
     });
-    board.columns.push(newColumn._id);
-    await this.boardService.updateBoardById(board._id.toHexString(), board);
     return newColumn;
   }
 
@@ -34,13 +32,7 @@ export class ColumnService {
     return this.columnDao.updateColumnById(id, dto);
   }
 
-  async deleteColumnById(id: string, boardId: string) {
-    const board = await this.boardService.findBoardById(boardId);
-    const ColumnIndex = board.columns.indexOf(this.columnDao.toHexObjectId(id));
-    if (ColumnIndex > -1) {
-      board.columns.splice(ColumnIndex, 1);
-    }
-    await this.boardService.updateBoardById(board._id.toHexString(), board);
+  async deleteColumnById(id: string) {
     return this.columnDao.deleteColumnById(id);
   }
 }
