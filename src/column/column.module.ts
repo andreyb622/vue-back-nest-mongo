@@ -20,5 +20,6 @@ import { ColumnService } from './servicies/column.service';
     ]),
     BoardModule,
   ],
+  exports: [ColumnService],
 })
 export class ColumnModule {}
