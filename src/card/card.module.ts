@@ -14,7 +14,7 @@ import { CardService } from './servicies/card.service';
       {
         typegooseClass: CardModel,
         schemaOptions: {
-          collection: 'Card',
+          collection: 'card',
         },
       },
     ]),
