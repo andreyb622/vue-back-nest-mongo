@@ -1,4 +1,6 @@
+import { mongoose } from '@typegoose/typegoose';
 import { ModelType } from '@typegoose/typegoose/lib/types';
+import { connections, mongo, Mongoose } from 'mongoose';
 import { InjectModel } from 'nestjs-typegoose';
 import { DAOBaseClass } from 'src/utils/entities/DAOBaseClass';
 import { CreateBoardDto } from '../dto/create-board.dto';
@@ -13,7 +15,37 @@ export class BoardDao extends DAOBaseClass {
   }
 
   async getById(id: string) {
-    return this.boardModel.findById(id).exec();
+    const response = await this.boardModel
+      .aggregate([
+        { $match: { _id: this.toHexObjectId(id) } },
+        {
+          $lookup: {
+            from: 'column',
+            localField: '_id',
+            foreignField: 'boardId',
+            as: 'columns',
+          },
+        },
+        {
+          $unwind: { path: '$columns' },
+        },
+        {
+          $lookup: {
+            from: 'card',
+            localField: 'columns._id',
+            foreignField: 'columnId',
+            as: 'columns.cards',
+          },
+        },
+      ])
+      .exec();
+
+    const board = { ...response[0] };
+    board.columns = [];
+    response.forEach((i) => {
+      board.columns.push(i.columns);
+    });
+    return board;
   }
 
   async getAllUsersBoards(userId) {
