@@ -1,6 +1,4 @@
-import { mongoose } from '@typegoose/typegoose';
 import { ModelType } from '@typegoose/typegoose/lib/types';
-import { connections, mongo, Mongoose } from 'mongoose';
 import { InjectModel } from 'nestjs-typegoose';
 import { DAOBaseClass } from 'src/utils/entities/DAOBaseClass';
 import { CreateBoardDto } from '../dto/create-board.dto';
