@@ -14,7 +14,7 @@ import { BoardService } from './servicies/board.service';
       {
         typegooseClass: BoardModel,
         schemaOptions: {
-          collection: 'Board',
+          collection: 'board',
         },
       },
     ]),

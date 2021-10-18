@@ -14,7 +14,7 @@ import { ColumnService } from './servicies/column.service';
       {
         typegooseClass: ColumnModel,
         schemaOptions: {
-          collection: 'Column',
+          collection: 'column',
         },
       },
     ]),

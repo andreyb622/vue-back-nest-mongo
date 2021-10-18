@@ -16,7 +16,7 @@ import { UserDao } from './DAO/user.dao';
       {
         typegooseClass: UserModel,
         schemaOptions: {
-          collection: 'User',
+          collection: 'user',
         },
       },
     ]),
