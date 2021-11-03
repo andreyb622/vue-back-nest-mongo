@@ -11,7 +11,7 @@ export const getMongoConfig = async (
 };
 
 const getMongoString = (configService: ConfigService) =>
-  `mongodb://user:password@localhost:27018/project?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&ssl=false`;
+  configService.get('DB_URL');
 
 const getMongoOptions = () => ({
   useNewUrlParser: true,
